@@ -35,7 +35,7 @@ $css = [
 
 $js = [
     '/assets/js/jquery-3.2.1.slim.js',
-    '/assets/lib/bootstrap-4.0.0/dist/css/bootstrap.min.css',
+    '/assets/lib/bootstrap-4.0.0/dist/js/bootstrap.min.js',
 ];
 
 $Outline = new Layout(COMPANY_NAME, COMPANY_DESC);

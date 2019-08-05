@@ -40,6 +40,7 @@ class Layout
                 echo sprintf('<link rel="stylesheet" href="%s">', $file);
             }
         }
+        $this->renderJS();
         echo '</head><body>';
     }
 
@@ -86,7 +87,6 @@ class Layout
 
     public function footer()
     {
-        $this->renderJS();
         echo "</div></body></html>";
     }
 

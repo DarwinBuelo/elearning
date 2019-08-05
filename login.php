@@ -9,6 +9,8 @@ if (isset($_POST['uname']) && isset($_POST['pswd'])) {
     $isLogged = $user->login($_POST['uname'], $_POST['pswd']);
     if ($isLogged) {
         $_SESSION['user'] = serialize($user);
+    } else {
+        $error = "Username or Password was incorrrect";
     }
 }
 

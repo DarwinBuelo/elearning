@@ -1,7 +1,23 @@
 <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+     
         <div class="card card-signin my-5">
+   <?php
+   if (isset($error)) {
+        ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Error</strong>
+                Username or Password was incorrect.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?php
+   } ?>
           <div class="card-body">
+            
+            
+      
            <form action="<?= $_SERVER['PHP_SELF']?>" class="needs-validation" method="post" novalidate>
   <div class="form-group">
     <label for="uname">Username:</label>
@@ -20,6 +36,8 @@
 
 <script>
 // Disable form submissions if there are invalid fields
+$('.alert').alert();
+
 (function() {
   'use strict';
   window.addEventListener('load', function() {

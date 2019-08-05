@@ -20,7 +20,7 @@
                     <a class="nav-link" href="#"><?= $user->getName()?></a>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="process.php?task=logout">Logout</a>
                 </li>
                 <?php
             } else {
