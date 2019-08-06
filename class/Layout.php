@@ -1,24 +1,19 @@
 <?php
+
 /**
  * Class Container
  * @author Darwin Buelo dbuelo@gmail.com
  * @since 14/07/2019
  * @version 1.0
  */
-
-
 class Layout
 {
-    protected $css = [];
+    protected $language = 'en';
+    protected $css      = [];
     protected $head;
-    protected $headEnd ;
-    protected $js =[];
+    protected $headEnd;
+    protected $js       = [];
     protected $favicon;
-
-    /**
-     * @TODO refactor this code.
-     * could be better
-     */
 
     /**
      * this render the header
@@ -26,22 +21,29 @@ class Layout
     public function header()
     {
         $this->setHead();
-        echo $this->head;
+        $html = $this->head;
         // set logo favicon
-        if (!isset($this->favicon)) {
-            echo "<link rel=\"icon\" 
-      type=\"image/png\" 
-      href=\"/res/images/logo.png\">";
+        if (isset($this->favicon)) {
+            $html .= sprintf("<link rel='icon' type='image/png' href='%s'>",$this->getFavIcon());
         }
         // create the css
         $list = $this->css;
         if (count($list) > 0) {
             foreach ($list as $file) {
-                echo sprintf('<link rel="stylesheet" href="%s">', $file);
+                $html .= sprintf('<link rel="stylesheet" href="%s">', $file);
+                $html .= PHP_EOL;
             }
         }
-        $this->renderJS();
-        echo '</head><body>';
+        
+        if (count($this->js) > 0) {
+            foreach ($this->js as $jsFile) {
+                $html .= sprintf("<script src='%s'></script>\n",$jsFile);
+                $html .= PHP_EOL;
+            }
+        }
+        $html .= '</head><body>';
+
+        print $html;
     }
 
     /**
@@ -54,7 +56,7 @@ class Layout
         //render attributes
         if (count($attributes) > 0) {
             foreach ($attributes as $key => $attribute) {
-                echo $key . '="' .$attribute .'"';
+                echo $key.'="'.$attribute.'"';
             }
         }
         echo ">";
@@ -64,37 +66,30 @@ class Layout
         }
     }
 
-  
-
     protected function setHead($data = null)
     {
         if (empty($data)) {
-            $data = '<!DOCTYPE html><html lang="tl"><head><title>' . COMPANY_NAME . '</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
+            $data = "<!DOCTYPE html><html lang='{$this->language}'><head>";
+            $data .= '<title>'.COMPANY_NAME.'</title>';
+            $data .= '<meta charset="utf-8">';
+            $data .= '<meta name="viewport" content="width=device-width, initial-scale=1">';
+            $data .= '<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
         }
 
         $this->head = $data;
     }
 
-    public function renderJS()
-    {
-        if (count($this->js) > 0) {
-            foreach ($this->js as $jsFile) {
-                echo "<script src=\"{$jsFile}\"></script>";
-            }
-        }
-    }
-
 
     public function footer()
     {
-        echo "</div></body></html>";
+        echo "</body></html>";
     }
 
     public function addCss($filePath)
     {
         if (is_array($filePath)) {
             foreach ($filePath as $file) {
-                $this->css[] =  $file;
+                $this->css[] = $file;
             }
         } else {
             $this->css[] = $filePath;
@@ -106,20 +101,19 @@ class Layout
         return $this->css;
     }
 
-     /**
+    /**
      * @param $path string /array
      */
     public function addJS($filePath)
     {
         if (is_array($filePath)) {
             foreach ($filePath as $file) {
-                $this->js[] =  $file;
+                $this->js[] = $file;
             }
         } else {
             $this->js[] = $filePath;
         }
     }
-
 
     public function getFavIcon()
     {
@@ -128,6 +122,6 @@ class Layout
 
     public function setFavIcon($file)
     {
-        $this->favicon = $file();
+        $this->favicon = $file;
     }
 }

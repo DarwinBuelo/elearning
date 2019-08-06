@@ -30,17 +30,19 @@ Dbcon::$password = DATABASE_PASSWORD;
 //initialize classes
 $css = [
     'assets/lib/bootstrap-4.0.0/dist/css/bootstrap.min.css',
-    'assets/css/styles.css'
+    'assets/lib/fontawesome-free-5.10.1-web/css/font-awesome.min.css'
 ];
 
+// js library to be included
 $js = [
-    '/assets/js/jquery-3.2.1.slim.js',
-    '/assets/lib/bootstrap-4.0.0/dist/js/bootstrap.min.js',
+    'assets/js/jquery-3.2.1.slim.js',
+    'assets/lib/bootstrap-4.0.0/dist/js/bootstrap.min.js'
 ];
 
 $Outline = new Layout(COMPANY_NAME, COMPANY_DESC);
 $Outline->addCSS($css);
 $Outline->addJS($js);
+$Outline->setFavIcon('assets/images/logo.png');
 
 if (isset($_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);

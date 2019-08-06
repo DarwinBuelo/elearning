@@ -3,10 +3,13 @@
 require_once('settings.php');
 $Outline->header();
 
-if (isset($_POST['uname']) && isset($_POST['pswd'])) {
+$username = Util::getParam('uname');
+$password = Util::getParam('pswd');
+
+if ($username && $password) {
     // authenticate
     $user = new  User();
-    $isLogged = $user->login($_POST['uname'], $_POST['pswd']);
+    $isLogged = $user->login($username, $password);
     if ($isLogged) {
         $_SESSION['user'] = serialize($user);
     } else {
@@ -15,7 +18,13 @@ if (isset($_POST['uname']) && isset($_POST['pswd'])) {
 }
 
 if (isset($_SESSION['user'])) {
-    header('location:index.php');
+    $user = unserialize($_SESSION['user']);
+    if($user->getRoleID() == 1){
+      Util::redirect('admin.php');
+    }else{
+      Util::redirect('index.php');
+    }
+    
 }
 
 require 'segments/login.form.php';

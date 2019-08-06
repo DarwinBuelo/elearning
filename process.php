@@ -5,18 +5,7 @@
 
 require 'settings.php';
 
-function getParam($param)
-{
-    $param = $_REQUEST[$param];
-    if (isset($param)) {
-        return $param;
-    } else {
-        return null;
-    }
-}
-
-
-$task = getParam('task');
+$task = Util::getParam('task');
 switch ($task) {
     case 'logout':
         session_destroy();

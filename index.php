@@ -2,25 +2,14 @@
 //require pages
 require_once('settings.php');
 $Outline->header();
-
-
+require 'segments/navbar.php';
+// Only shows when you are login
 if(isset($user) && !empty($user)){
-    //includes only when admin is available
     if($user->getRoleID() == 1){
-        require 'segments/sidebar.php';
-
+        Util::redirect('admin.php');
     }
-}else{
-    require 'segments/navbar.php';
+    echo 'test';
 }
-
-//main content
-?>
-    <div class="container-fluid">
-        <div>ehelooo</div>
-    </div>
-
-<?php
 
 
 $Outline->footer();
