@@ -15,7 +15,18 @@ if(isset($user) && $user->getRoleID() == 1){
         switch ($page){
 
             case 'addUser':
-                echo 'test';
+                if(!empty(Util::getParam('submit'))){
+                    //perform saving
+                    $name = Util::getParam('name');
+                    $lastname = Util::getParam('lastname');
+                    $username = Util::getParam('uname');
+                    $middlename = Util::getParam('mname');
+                    $email = Util::getParam('name');
+                    $password = "elearning";
+                    User::addUser($name, $lastname, $username,$middlename, $email, $password);
+                    //if the result was success set the a variable that will display success else 
+                    //error then load the data back to the forms
+                }
                 require 'segments/admin/addUser/addUser.php';
                 break;
             default:

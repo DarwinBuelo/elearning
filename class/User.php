@@ -9,22 +9,22 @@ class User
     private $middlename;
     private $email;
     private $phone;
-    private $roleID; // 0 for normal user and 1 for admin
-    private $roleName; // 0 for normal user and 1 for admin
+    private $roleID; 
+    private $roleName;
 
-    public function addUser($name, $lastname, $username, $email, $password, $role = 0)
+    public static function addUser($name, $surname, $username,$middlename, $email, $password, $role = 1)
     {
         $data = [
-            'name'=> $name ,
-            'lastname' => $lastname,
             'username' => $username,
+            'name'=> $name ,
+            'surname' => $surname,
+            'middlename' => $middlename,
             'email' => $email,
-            'password'=>$password,
+            'password'=>hash('sha256',$password),
             'role'=>$role
         ];
         $result =Dbcon::insert('users', $data);
         if ($result) {
-            $this->id = $result;
             return $result;
         } else {
             return false;
@@ -35,6 +35,7 @@ class User
     {
         $username = Dbcon::clean($username);
         $password = Dbcon::clean($password);
+        $password = hash('sha256',$password);
         if (!strpos($username, '@')) {
             $sql = "
                 SELECT 
@@ -56,7 +57,7 @@ class User
                 WHERE
                     username = '{$username}'
                 AND 
-                    password = MD5('{$password}')
+                    password = ('{$password}')
             ";
         } else {
             $sql = "

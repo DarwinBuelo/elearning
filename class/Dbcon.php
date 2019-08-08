@@ -56,6 +56,7 @@ class Dbcon
 
         $query = "INSERT INTO {$table} ({$fields}) VALUES ('{$data}')";
         try {
+            self::connect();
             mysqli_query(self::$conn, $query) or die(mysqli_error(self::$conn));
             return mysqli_insert_id(self::$conn);
         } catch (Exception $e) {
